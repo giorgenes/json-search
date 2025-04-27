@@ -2,5 +2,9 @@
 
 # require lib/cli
 require_relative '../lib/cli'
+require_relative '../lib/json_adapter'
+
+adapter = JsonAdapter.new
+adapter.load_from("./clients.json")
 
 Cli.new(ARGV).run
