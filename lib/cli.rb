@@ -1,6 +1,7 @@
 class Cli
-  def initialize(args)
+  def initialize(args, db)
     @args = args
+    @db = db
   end
 
   COMMANDS = {
@@ -34,6 +35,15 @@ class Cli
 
   def search(args)
     puts "Searching for: #{args.join(' ')}"
+
+    loc = @db.term(:clients, :full_name, args.join(' '))
+    if loc.nil?
+      puts "No results found for: #{args.join(' ')}"
+      return
+    end
+
+    puts "Found: #{loc.inspect}"
+
   end
 
   def find_dups

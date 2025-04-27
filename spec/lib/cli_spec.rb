@@ -1,6 +1,11 @@
 describe Cli do
-  let(:cli) { described_class.new(args) }
+  let(:db) { instance_double('Database') }
+  let(:cli) { described_class.new(args, db) }
   let(:args) { [] }
+
+  before do
+    allow(db).to receive(:term).and_return(nil)
+  end
 
   describe '#help' do
     it 'prints the help message' do

@@ -13,13 +13,13 @@ describe JsonAdapter do
     it 'loads JSON data from a URI' do
       subject
 
-      expect(json_adapter.docs).to eq(JSON.parse(json_data))
+      expect(subject).to eq(JSON.parse(json_data))
     end
 
     it 'handles HTTP errors gracefully' do
       allow(URI).to receive(:open).with(uri).and_raise(OpenURI::HTTPError.new('404 Not Found', nil))
       expect { subject }.not_to raise_error
-      expect(json_adapter.docs).to be_empty
+      expect(subject).to be_empty
     end
   end
 end
