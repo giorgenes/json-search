@@ -54,4 +54,14 @@ class Database
     end
   end
 
+  def dups(table_name, column_name)
+    raise "Table #{table_name} not found" unless @tables.key?(table_name)
+    raise "Index for column #{column_name} not found" unless @indexes[table_name]&.key?(column_name)
+
+    table = @tables[table_name]
+    index = @indexes[table_name][column_name]
+
+    index.dups
+  end
+
 end

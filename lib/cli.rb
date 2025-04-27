@@ -50,5 +50,9 @@ class Cli
 
   def find_dups
     puts "Finding duplicates..."
+
+    @db.dups(:clients, :email).each do |loc|
+      puts "Duplicate found: #{loc}"
+    end
   end
 end

@@ -6,6 +6,7 @@ describe Cli do
   before do
     allow(db).to receive(:term).and_return(nil)
     allow(db).to receive(:prefix).and_return([])
+    allow(db).to receive(:dups).and_return([])
   end
 
   describe '#help' do

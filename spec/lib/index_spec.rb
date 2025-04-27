@@ -36,4 +36,17 @@ describe Index do
       expect(index.prefix('D')).to be_empty
     end
   end
+
+  describe '#dups' do
+    let(:data) { ['Alice', 'Bob', 'Alice'] }
+
+    it 'returns the indices of duplicate elements' do
+      expect(index.dups).to eq(['Alice'])
+    end
+
+    it 'returns an empty array if there are no duplicates' do
+      data.pop
+      expect(index.dups).to be_empty
+    end
+  end
 end

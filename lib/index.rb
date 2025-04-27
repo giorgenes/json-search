@@ -1,3 +1,5 @@
+require 'set'
+
 class Index
   def initialize(size, data_accessor)
     @size = size
@@ -48,5 +50,30 @@ class Index
     end
 
     matches
+  end
+
+  def dups
+    i = 0
+    dups = Set.new
+
+    while i < @size - 1
+      j = i + 1
+      while j < @size
+        v = @data_accessor.call(@index[i])
+        u = @data_accessor.call(@index[j])
+
+        if v == u 
+          dups << v
+        else
+          break
+        end
+
+        j += 1
+      end
+
+      i = j
+    end
+
+    dups.to_a
   end
 end
