@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+# require lib/cli
+require_relative '../lib/cli'
+
+Cli.new(ARGV).run
