@@ -36,13 +36,15 @@ class Cli
   def search(args)
     puts "Searching for: #{args.join(' ')}"
 
-    loc = @db.term(:clients, :full_name, args.join(' '))
-    if loc.nil?
+    locs = @db.prefix(:clients, :full_name, args.join(' '))
+    if locs.empty?
       puts "No results found for: #{args.join(' ')}"
       return
     end
 
-    puts "Found: #{loc.inspect}"
+    locs.each do |loc|
+      puts "Found: #{loc.inspect}"
+    end
 
   end
 

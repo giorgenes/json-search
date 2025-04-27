@@ -39,4 +39,19 @@ class Database
     table[loc]
   end
 
+  def prefix(table_name, column_name, query)
+    raise "Table #{table_name} not found" unless @tables.key?(table_name)
+    raise "Index for column #{column_name} not found" unless @indexes[table_name]&.key?(column_name)
+
+    table = @tables[table_name]
+    index = @indexes[table_name][column_name]
+    locs = index.prefix(query)
+
+    return [] if locs.empty?
+
+    locs.map do |loc|
+      table[loc]
+    end
+  end
+
 end

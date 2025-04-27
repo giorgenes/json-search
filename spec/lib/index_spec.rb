@@ -1,5 +1,5 @@
 describe Index do
-  let(:data) { ['B', 'A', 'C'] }
+  let(:data) { ['Bcd', 'Abc', 'Cde'] }
   let(:data_accessor) { ->(i) { data[i] } }
   let(:index) { Index.new(data.size, data_accessor) }
 
@@ -19,10 +19,21 @@ describe Index do
 
   describe '#term' do
     it 'returns the index of the first element greater than or equal to the query' do
-      expect(index.term('A')).to eq(0)
-      expect(index.term('B')).to eq(1)
-      expect(index.term('C')).to eq(2)
+      expect(index.term('Abc')).to eq(0)
+      expect(index.term('Bcd')).to eq(1)
+      expect(index.term('Cde')).to eq(2)
       expect(index.term('D')).to be_nil
+    end
+  end
+
+  describe '#prefix' do
+    let(:data) { ['Alice', 'Bob', "Alonso"] }
+
+    it 'returns the index of the first element with the given prefix' do
+      expect(index.prefix('Al')).to eq([0, 2])
+      expect(index.prefix('Bob')).to eq([1])
+      expect(index.prefix('Alo')).to eq([2])
+      expect(index.prefix('D')).to be_empty
     end
   end
 end

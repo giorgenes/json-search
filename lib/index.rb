@@ -14,10 +14,39 @@ class Index
   end
 
   def term(query)
-    @index.bsearch_index do |i|
+    loc = @index.bsearch_index do |i|
       value = @data_accessor.call(i)
 
       value >= query
     end
+
+    return nil if loc.nil?
+
+    @data_accessor.call(@index[loc]) == query ? loc : nil
+  end
+
+  def prefix(query)
+    loc = @index.bsearch_index do |i|
+      value = @data_accessor.call(i)
+
+      value[0, query.length] >= query
+    end
+
+    return [] if loc.nil?
+
+    matches = []
+
+    while loc < @size
+      value = @data_accessor.call(@index[loc])
+      if value[0, query.length] == query
+        matches << @index[loc]
+      else
+        break
+      end
+
+      loc += 1
+    end
+
+    matches
   end
 end
